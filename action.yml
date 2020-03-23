@@ -56,4 +56,4 @@ inputs:
     required: false
 runs:
   using: 'docker'
-  image: docker://fmidue/copy-github-issues
+  image: docker://fmidue/copy-github-issues:9e15733d237cf86ebca3fc447bccaf9cfae44090
