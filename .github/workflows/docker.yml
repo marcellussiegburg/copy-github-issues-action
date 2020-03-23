@@ -1,0 +1,33 @@
+name: Publish To Docker Hub
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Format refs
+      id: format_ref
+      env:
+        REF: ${{ github.ref }}
+      run: |
+        export SIMPLE_REF=$(echo $REF | sed 's#^[^,]*/##g')
+        echo $SIMPLE_REF
+        echo "::set-output name=ref::$SIMPLE_REF"
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@f53e41d852cec2b42dec4147c971e8029f07479c
+      with:
+        name: fmidue/copy-github-issues
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        cache: true
+        tags: latest,${{ github.sha }},${{ steps.format_ref.outputs.ref }}
+        tag_semver: true
+    - name: Update reference
+      env:
+        SHA: ${{ github.sha }}
+      run: |
+        sed -i 's#\(image: docker://[^:]*\).*$#\1:'$SHA'#g' action.yml
+    - uses: stefanzweifel/git-auto-commit-action@480e111bf8274f3bbd429aef51504f71c808e3e4
+      with:
+        commit_message: Update current docker version in action to ${{ github.sha }}
+        file_pattern: action.yml

@@ -1,0 +1,59 @@
+name: 'Copy Github Issues'
+description: 'Copy Github issues from one repository to another'
+inputs:
+  source_token:
+    description: 'The token of the source repository'
+    required: false
+  source_user:
+    description: 'The user as which to authenticate in order to use the source_token'
+    required: false
+  source_owner:
+    description: 'The owner of the source repository'
+    required: false
+  source_repository:
+    description: 'The source repositories name'
+    required: false
+  target_token:
+    description: 'The token of the target repository'
+    required: false
+  target_user:
+    description: 'The user as which to authenticate in order to use the target_token'
+    required: false
+  target_owner:
+    description: 'The owner of the target repository'
+    required: false
+  target_repository:
+    description: 'The target repositories name'
+    required: false
+  force_issue_number:
+    description: 'Whether to force synchronising issue numbers when copying'
+    required: true
+    default: true
+  copy_all_missing_issues:
+    description: 'Whether to copy all missing intermediate issues'
+    required: true
+    default: false
+  close_issue:
+    description: 'Whether to close the issue copy'
+    required: true
+    default: false
+  reference_old_issue:
+    description: 'Whether to reference the old issue within the new issue'
+    required: true
+    default: false
+  issue_title:
+    description: 'Use this issue title for copied issues'
+    required: true
+  issue_body:
+    description: 'Use this issue body for copied issues'
+    required: true
+  deleted_issue_title:
+    description: 'Use this issue title for issues for which there does not exist a number any more'
+    required: true
+    default: 'GONE'
+  deleted_issue_body:
+    description: 'Use this issue body for copied issues for which there does not exist a number any more'
+    required: false
+runs:
+  using: 'docker'
+  image: docker://fmidue/copy-github-issues

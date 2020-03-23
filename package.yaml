@@ -1,0 +1,27 @@
+name:                copy-github-issues
+version:             1.0
+github:              "fmiude/copy-github-issues"
+license:             MIT
+author:              "Marcellus Siegburg"
+maintainer:          "marcellus.siegburg@uni-due.de"
+copyright:           "2019 Marcellus Siegburg"
+
+synopsis:            A simple library to copy the latest github issues to another github repository
+
+description:         Please see the README on GitHub at <https://github.com/fmiude/copy-github-issues-action#readme>
+
+dependencies:
+- base                        >= 4.7 && < 5
+- bytestring
+- containers
+- github
+- http-client
+- http-types
+- string-interpolate
+- text
+- vector
+
+executables:
+  copy-github-issues:
+    main: Main.hs
+    source-dirs: src
